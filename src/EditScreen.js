@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   Text,
@@ -10,142 +10,116 @@ import {
   ImageBackground,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { updatePet } from "../api";
-import { findPet } from "../api";
+import { updatePet, findPet } from "../api";
 
-class EditScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: null,
-      name: null,
-      status: "available",
-    };
-    this.getPetById(this.props.route.params.id);
-  }
+const EditScreen = ({ route, navigation }) => {
+  const [petData, setPetData] = useState({
+    id: null,
+    name: null,
+    status: "available",
+  });
 
-  getPetById(id) {
+  useEffect(() => {
+    getPetById(route.params.id);
+  }, []);
+
+  const getPetById = (id) => {
     findPet(id).then((response) => {
-      const state = this.state;
-      state.id = response.id.toString();
-      state.name = response.name;
-      state.status = response.status;
-      this.setState(state);
+      setPetData({
+        id: response.id.toString(),
+        name: response.name,
+        status: response.status,
+      });
     });
-  }
+  };
 
-  createAlertSuccess() {
+  const createAlertSuccess = () => {
     Alert.alert("Alerta Succes", "Intrarea a fost editata cu succes", [
-      { text: "OK", onPress: () => this.props.navigation.navigate("list", {}) },
+      { text: "OK", onPress: () => navigation.navigate("list") },
     ]);
-  }
+  };
 
-  createAlertValidate() {
+  const createAlertValidate = () => {
     Alert.alert(
       "Alerta Validare",
       "Editatea este incorecta. Va rugam verificati.",
-      [
-        {
-          text: "OK",
-        },
-      ]
+      [{ text: "OK" }]
     );
-  }
+  };
 
-  createAlertError() {
+  const createAlertError = () => {
     Alert.alert(
       "Alerta Eroare",
       "Datele nu au fost create. Va rugam incercati mai tarziu in cazul in care nu merge serverul.",
-      [
-        {
-          text: "OK",
-        },
-      ]
+      [{ text: "OK" }]
     );
-  }
+  };
 
-  editPet() {
+  const editPet = () => {
+    const { id, name, status } = petData;
     // Validate form inputs
-    if (
-      this.state.id === null ||
-      this.state.name === null ||
-      this.state.status === null ||
-      this.state.id.length === 0 ||
-      this.state.name.length === 0 ||
-      isNaN(this.state.id) ||
-      this.state.status.length === 0
-    ) {
-      this.createAlertValidate();
+    if (!id || !name || !status || isNaN(id) || !status.length) {
+      createAlertValidate();
     } else {
-      updatePet(this.state.id, this.state.name, this.state.status).then(
-        (response) => {
-          if (response) {
-            this.createAlertSuccess();
-          } else {
-            this.createAlertError();
-          }
+      updatePet(id, name, status).then((response) => {
+        if (response) {
+          createAlertSuccess();
+        } else {
+          createAlertError();
         }
-      );
+      });
     }
-  }
+  };
 
-  setName(newText) {
-    const state = this.state;
-    state.name = newText;
-    this.setState(state);
-  }
-  setStatus(newText) {
-    const state = this.state;
-    state.status = newText;
-    this.setState(state);
-  }
+  const setName = (newText) => {
+    setPetData((prevState) => ({ ...prevState, name: newText }));
+  };
 
-  render() {
-    return (
-      <LinearGradient colors={["#ccffcc", "white"]} style={styles.container}>
-        <ImageBackground
-          source={require("../assets/marks.png")}
-          resizeMode="cover"
-          style={styles.container}
-          imageStyle={styles.backgroundimage}
-        >
-          <View style={styles.Inputpadding}>
-            <Text>Id:</Text>
-            <TextInput
-              style={styles.input}
-              defaultValue={this.state.id}
-              editable={false}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <Text>Nume:</Text>
-            <TextInput
-              style={styles.input}
-              defaultValue={this.state.name}
-              onChangeText={(newText) => this.setName(newText)}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <Text>Status:</Text>
-            <Picker
-              selectedValue={this.state.status}
-              onValueChange={(currentStatus) => this.setStatus(currentStatus)}
-            >
-              <Picker.Item label="Available" value="available" />
-              <Picker.Item label="Pending" value="pending" />
-              <Picker.Item label="Sold" value="sold" />
-            </Picker>
-            <View style={styles.btn}>
-              <TouchableOpacity onPress={() => this.editPet()}>
-                <Text style={styles.btnText}>Editare</Text>
-              </TouchableOpacity>
-            </View>
+  const setStatus = (newStatus) => {
+    setPetData((prevState) => ({ ...prevState, status: newStatus }));
+  };
+
+  return (
+    <LinearGradient colors={["#ccffcc", "white"]} style={styles.container}>
+      <ImageBackground
+        source={require("../assets/marks.png")}
+        resizeMode="cover"
+        style={styles.container}
+        imageStyle={styles.backgroundimage}
+      >
+        <View style={styles.Inputpadding}>
+          <Text>Id:</Text>
+          <TextInput
+            style={styles.input}
+            defaultValue={petData.id}
+            editable={false}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Text>Nume:</Text>
+          <TextInput
+            style={styles.input}
+            defaultValue={petData.name}
+            onChangeText={setName}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Text>Status:</Text>
+          <Picker selectedValue={petData.status} onValueChange={setStatus}>
+            <Picker.Item label="Available" value="available" />
+            <Picker.Item label="Pending" value="pending" />
+            <Picker.Item label="Sold" value="sold" />
+          </Picker>
+          <View style={styles.btn}>
+            <TouchableOpacity onPress={editPet}>
+              <Text style={styles.btnText}>Editare</Text>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
-      </LinearGradient>
-    );
-  }
-}
+        </View>
+      </ImageBackground>
+    </LinearGradient>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
