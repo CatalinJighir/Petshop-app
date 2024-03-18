@@ -1,70 +1,28 @@
-// Connecting with https://petstore.swagger.io/
+import axios from "axios";
+
+const apiUrl = "https://petstore.swagger.io/v2/pet";
 
 export const findPets = async (status) => {
-  const response = await fetch(
-    `https://petstore.swagger.io/v2/pet/findByStatus?status=${status}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    }
-  );
-  return response.json();
+  const response = await axios.get(`${apiUrl}/findByStatus?status=${status}`);
+  return response.data;
 };
 
 export const createPet = async (id, name, status) => {
-  const response = await fetch(`https://petstore.swagger.io/v2/pet`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: id,
-      name: name,
-      status: status,
-    }),
-  });
-  if (response.ok) {
-    return response.json();
-  } else {
-    return {};
-  }
+  const response = await axios.post(apiUrl, { id, name, status });
+  return response.data;
 };
 
 export const updatePet = async (id, name, status) => {
-  const response = await fetch(`https://petstore.swagger.io/v2/pet`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: id,
-      name: name,
-      status: status,
-    }),
-  });
-  return response.json();
+  const response = await axios.put(apiUrl, { id, name, status });
+  return response.data;
 };
 
 export const findPet = async (id) => {
-  const response = await fetch(`https://petstore.swagger.io/v2/pet/${id}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-  return response.json();
+  const response = await axios.get(`${apiUrl}/${id}`);
+  return response.data;
 };
 
 export const deletePet = async (id) => {
-  const response = await fetch(`https://petstore.swagger.io/v2/pet/${id}`, {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-  return response.json();
+  const response = await axios.delete(`${apiUrl}/${id}`);
+  return response.data;
 };
