@@ -7,13 +7,12 @@ import {
   Alert,
   Modal,
   Pressable,
-  StatusBar,
   ScrollView,
 } from "react-native";
 import { Table, TableWrapper, Row, Cell } from "react-native-table-component";
 import { withNavigation } from "react-navigation";
-import { findPets, deletePet } from "../api";
-import { Picker } from "@react-native-picker/picker";
+import { findPets, deletePet } from "../../../api";
+import RNPickerSelect from "react-native-picker-select";
 
 const ListScreen = ({ navigation }) => {
   const [tableData, setTableData] = useState([]);
@@ -23,7 +22,7 @@ const ListScreen = ({ navigation }) => {
 
   useEffect(() => {
     getPetsByStatus(status);
-  }, [status]);
+  }, [status, tableData]);
 
   const _Create = () => {
     navigation.navigate("create");
@@ -76,22 +75,23 @@ const ListScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar style="white" />
       <View style={styles.container}>
         <View style={styles.btn} android_ripple={{ color: "green" }}>
           <TouchableOpacity onPress={_Create}>
             <Text style={styles.btnText}>Adaugare</Text>
           </TouchableOpacity>
         </View>
-        <Picker
-          style={styles.pick}
-          selectedValue={status}
-          onValueChange={(currentStatus) => setStatus(currentStatus)}
-        >
-          <Picker.Item label="Available" value="available" />
-          <Picker.Item label="Pending" value="pending" />
-          <Picker.Item label="Sold" value="sold" />
-        </Picker>
+        <RNPickerSelect
+          style={pickerSelectStyles}
+          onValueChange={(value) => setStatus(value)}
+          items={[
+            { label: "Available", value: "available" },
+            { label: "Pending", value: "pending" },
+            { label: "Sold", value: "sold" },
+          ]}
+          value={status}
+          placeholder={{}}
+        />
         <ScrollView style={styles.scrollbar}>
           <Table borderStyle={{ borderColor: "transparent", borderWidth: 1 }}>
             <Row
@@ -190,17 +190,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   btn: {
-    width: 80,
+    width: 100,
     height: 30,
     backgroundColor: "#19e6e6",
     borderRadius: 5,
-    margin: 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnText: {
     textAlign: "center",
     color: "#000",
-    elevation: 2,
-    marginTop: 4,
+    fontSize: 14,
   },
   btnTextTable: {
     textAlign: "center",
@@ -261,6 +261,20 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+    color: "black",
+    paddingRight: 30,
+    marginVertical: 20,
   },
 });
 

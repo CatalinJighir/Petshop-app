@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { findPet } from "../api";
+import { findPet } from "../../../api";
 
 const ViewScreen = ({ route }) => {
   const [pet, setPet] = useState({
@@ -45,7 +45,7 @@ const ViewScreen = ({ route }) => {
     <>
       <LinearGradient colors={["#ccffcc", "white"]} style={styles.container}>
         <ImageBackground
-          source={require("../assets/marks.png")}
+          source={require("../../../assets/marks.png")}
           resizeMode="cover"
           style={styles.container}
           imageStyle={styles.backgroundimage}

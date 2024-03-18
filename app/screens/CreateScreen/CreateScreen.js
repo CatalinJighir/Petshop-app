@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { createPet } from "../api";
-import { Picker } from "@react-native-picker/picker";
+import { createPet } from "../../../api";
+import RNPickerSelect from "react-native-picker-select";
 
 const CreateScreen = ({ navigation }) => {
   const [petData, setPetData] = useState({
@@ -60,7 +60,7 @@ const CreateScreen = ({ navigation }) => {
   return (
     <LinearGradient colors={["#ccffcc", "white"]} style={styles.container}>
       <ImageBackground
-        source={require("../assets/marks.png")}
+        source={require("../../../assets/marks.png")}
         resizeMode="cover"
         style={styles.container}
         imageStyle={styles.backgroundimage}
@@ -88,19 +88,22 @@ const CreateScreen = ({ navigation }) => {
             autoCorrect={false}
           />
           <Text>Status:</Text>
-          <Picker
-            selectedValue={petData.status}
+          <RNPickerSelect
+            style={pickerSelectStyles}
             onValueChange={(currentStatus) =>
               setPetData((prevState) => ({
                 ...prevState,
                 status: currentStatus,
               }))
             }
-          >
-            <Picker.Item label="Available" value="available" />
-            <Picker.Item label="Pending" value="pending" />
-            <Picker.Item label="Sold" value="sold" />
-          </Picker>
+            items={[
+              { label: "Available", value: "available" },
+              { label: "Pending", value: "pending" },
+              { label: "Sold", value: "sold" },
+            ]}
+            value={petData.status}
+            placeholder={{}}
+          />
           <View style={styles.btn}>
             <TouchableOpacity onPress={addPet}>
               <Text style={styles.btnText}>Adaugare</Text>
@@ -136,6 +139,20 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   btnText: { textAlign: "center", color: "#000", marginTop: 4 },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+    color: "black",
+    paddingRight: 30,
+    marginVertical: 20,
+  },
 });
 
 export default CreateScreen;
