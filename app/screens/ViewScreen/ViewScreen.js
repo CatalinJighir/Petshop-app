@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { findPet } from "../../../api";
+import styles from "./ViewScreenStyles";
 
 const ViewScreen = ({ route }) => {
   const [pet, setPet] = useState({
@@ -62,20 +63,5 @@ const ViewScreen = ({ route }) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  Inputpadding: {
-    padding: 16,
-  },
-  styletext: {
-    margin: 2,
-  },
-  backgroundimage: {
-    opacity: 0.15,
-  },
-});
 
 export default ViewScreen;
