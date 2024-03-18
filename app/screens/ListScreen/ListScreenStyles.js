@@ -65,11 +65,10 @@ const styles = StyleSheet.create({
   },
   scrollbar: { marginTop: -1 },
   modalView: {
-    margin: 20,
+    margin: 50,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -78,6 +77,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    paddingHorizontal: 50,
   },
   button: {
     borderRadius: 20,
@@ -86,7 +86,10 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#90EE90",
+  },
+  buttonCloseNo: {
+    backgroundColor: "#FF7F7F",
   },
   textStyle: {
     color: "white",

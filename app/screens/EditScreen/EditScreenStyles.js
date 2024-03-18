@@ -17,16 +17,19 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   btn: {
-    width: 60,
+    width: 100,
     height: 30,
     backgroundColor: "#19e6e6",
-    borderRadius: 2,
-    margin: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#000",
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnText: {
     textAlign: "center",
     color: "#000",
-    marginTop: 4,
+    fontSize: 14,
   },
 });
 

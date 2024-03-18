@@ -147,7 +147,7 @@ const ListScreen = ({ navigation }) => {
                 <Text style={styles.textStyle}>Yes</Text>
               </Pressable>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={[styles.button, styles.buttonCloseNo]}
                 onPress={() => setModalVisible(false)}
               >
                 <Text style={styles.textStyle}>No</Text>
