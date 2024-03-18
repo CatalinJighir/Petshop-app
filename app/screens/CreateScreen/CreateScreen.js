@@ -4,14 +4,13 @@ import {
   Text,
   View,
   Alert,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
 import { createPet } from "../../../api";
-import RNPickerSelect from "react-native-picker-select";
 import styles from "./CreateScreenStyles";
+import PickerComponent from "../../components/PickerComponent/PickerComponent";
 
 const CreateScreen = ({ navigation }) => {
   const [petData, setPetData] = useState({
@@ -89,21 +88,14 @@ const CreateScreen = ({ navigation }) => {
             autoCorrect={false}
           />
           <Text>Status:</Text>
-          <RNPickerSelect
-            style={pickerSelectStyles}
+          <PickerComponent
+            value={petData.status}
             onValueChange={(currentStatus) =>
               setPetData((prevState) => ({
                 ...prevState,
                 status: currentStatus,
               }))
             }
-            items={[
-              { label: "Available", value: "available" },
-              { label: "Pending", value: "pending" },
-              { label: "Sold", value: "sold" },
-            ]}
-            value={petData.status}
-            placeholder={{}}
           />
           <View style={styles.btn}>
             <TouchableOpacity onPress={addPet}>
@@ -115,19 +107,5 @@ const CreateScreen = ({ navigation }) => {
     </LinearGradient>
   );
 };
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
-    color: "black",
-    paddingRight: 30,
-    marginVertical: 20,
-  },
-});
 
 export default CreateScreen;

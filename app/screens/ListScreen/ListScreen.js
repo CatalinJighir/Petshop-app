@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   View,
   Text,
   TouchableOpacity,
@@ -12,8 +11,8 @@ import {
 import { Table, TableWrapper, Row, Cell } from "react-native-table-component";
 import { withNavigation } from "react-navigation";
 import { findPets, deletePet } from "../../../api";
-import RNPickerSelect from "react-native-picker-select";
 import styles from "./ListScreenStyles";
+import PickerComponent from "../../components/PickerComponent/PickerComponent";
 
 const ListScreen = ({ navigation }) => {
   const [tableData, setTableData] = useState([]);
@@ -82,16 +81,9 @@ const ListScreen = ({ navigation }) => {
             <Text style={styles.btnText}>Adaugare</Text>
           </TouchableOpacity>
         </View>
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          onValueChange={(value) => setStatus(value)}
-          items={[
-            { label: "Available", value: "available" },
-            { label: "Pending", value: "pending" },
-            { label: "Sold", value: "sold" },
-          ]}
+        <PickerComponent
           value={status}
-          placeholder={{}}
+          onValueChange={(value) => setStatus(value)}
         />
         <ScrollView style={styles.scrollbar}>
           <Table borderStyle={{ borderColor: "transparent", borderWidth: 1 }}>
@@ -167,19 +159,5 @@ const ListScreen = ({ navigation }) => {
     </>
   );
 };
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
-    color: "black",
-    paddingRight: 30,
-    marginVertical: 20,
-  },
-});
 
 export default withNavigation(ListScreen);

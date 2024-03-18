@@ -4,14 +4,13 @@ import {
   Text,
   View,
   Alert,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
 import { updatePet, findPet } from "../../../api";
-import RNPickerSelect from "react-native-picker-select";
 import styles from "./EditScreenStyles";
+import PickerComponent from "../../components/PickerComponent/PickerComponent";
 
 const EditScreen = ({ route, navigation }) => {
   const [petData, setPetData] = useState({
@@ -106,17 +105,7 @@ const EditScreen = ({ route, navigation }) => {
             autoCorrect={false}
           />
           <Text>Status:</Text>
-          <RNPickerSelect
-            style={pickerSelectStyles}
-            onValueChange={setStatus}
-            items={[
-              { label: "Available", value: "available" },
-              { label: "Pending", value: "pending" },
-              { label: "Sold", value: "sold" },
-            ]}
-            value={petData.status}
-            placeholder={{}}
-          />
+          <PickerComponent value={petData.status} onValueChange={setStatus} />
           <View style={styles.btn}>
             <TouchableOpacity onPress={editPet}>
               <Text style={styles.btnText}>Editare</Text>
@@ -127,19 +116,5 @@ const EditScreen = ({ route, navigation }) => {
     </LinearGradient>
   );
 };
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
-    color: "black",
-    paddingRight: 30,
-    marginVertical: 20,
-  },
-});
 
 export default EditScreen;
