@@ -60,15 +60,15 @@ const ListScreen = ({ navigation }) => {
   };
 
   const createAlertSuccess = () => {
-    Alert.alert("Alerta Succes", "Intrarea a fost stearsa cu succes", [
+    Alert.alert("Alert Success", "The entry was successfully deleted", [
       { text: "OK", onPress: () => navigation.navigate("list", {}) },
     ]);
   };
 
   const createAlertError = () => {
     Alert.alert(
-      "Alerta Eroare",
-      "Datele nu au fost sterse. Va rugam incercati mai tarziu in cazul in care nu merge serverul.",
+      "Alert Error",
+      "The data has not been deleted. Please try again later if the server is down.",
       [{ text: "OK" }]
     );
   };
@@ -76,9 +76,9 @@ const ListScreen = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.btn} android_ripple={{ color: "green" }}>
+        <View style={styles.btn}>
           <TouchableOpacity onPress={_Create}>
-            <Text style={styles.btnText}>Adaugare</Text>
+            <Text style={styles.btnText}>Add new entry</Text>
           </TouchableOpacity>
         </View>
         <PickerComponent
@@ -88,7 +88,7 @@ const ListScreen = ({ navigation }) => {
         <ScrollView style={styles.scrollbar}>
           <Table borderStyle={{ borderColor: "transparent", borderWidth: 1 }}>
             <Row
-              data={["Index", "Nume", "Status", "Actiuni"]}
+              data={["Index", "Name", "Status", "Actions"]}
               style={styles.head}
               textStyle={styles.text}
             />
@@ -103,19 +103,19 @@ const ListScreen = ({ navigation }) => {
                     <View>
                       <TouchableOpacity onPress={() => _GoToViewScreen(index)}>
                         <View style={styles.btnView}>
-                          <Text style={styles.btnTextTable}>vizualizare</Text>
+                          <Text style={styles.btnTextTable}>View</Text>
                         </View>
                       </TouchableOpacity>
 
                       <TouchableOpacity onPress={() => _GoToEditScreen(index)}>
                         <View style={styles.btnEdit}>
-                          <Text style={styles.btnTextTable}>editare</Text>
+                          <Text style={styles.btnTextTable}>Edit</Text>
                         </View>
                       </TouchableOpacity>
 
                       <TouchableOpacity onPress={() => _Delete(index)}>
                         <View style={styles.btnDelete}>
-                          <Text style={styles.btnTextTable}>stergere</Text>
+                          <Text style={styles.btnTextTable}>Delete</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -138,19 +138,19 @@ const ListScreen = ({ navigation }) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Sunteti sigur ca vreti sa stergeti?
+                Are you sure you want to delete?
               </Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={removePet}
               >
-                <Text style={styles.textStyle}>Da</Text>
+                <Text style={styles.textStyle}>Yes</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(false)}
               >
-                <Text style={styles.textStyle}>Nu</Text>
+                <Text style={styles.textStyle}>No</Text>
               </Pressable>
             </View>
           </View>

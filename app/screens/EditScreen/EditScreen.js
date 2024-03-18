@@ -34,23 +34,21 @@ const EditScreen = ({ route, navigation }) => {
   };
 
   const createAlertSuccess = () => {
-    Alert.alert("Alerta Succes", "Intrarea a fost editata cu succes", [
+    Alert.alert("Alerta Success", "The entry has been edited successfully", [
       { text: "OK", onPress: () => navigation.navigate("list") },
     ]);
   };
 
   const createAlertValidate = () => {
-    Alert.alert(
-      "Alerta Validare",
-      "Editatea este incorecta. Va rugam verificati.",
-      [{ text: "OK" }]
-    );
+    Alert.alert("Validation Alert", "The edition is incorrect. Please check.", [
+      { text: "OK" },
+    ]);
   };
 
   const createAlertError = () => {
     Alert.alert(
-      "Alerta Eroare",
-      "Datele nu au fost create. Va rugam incercati mai tarziu in cazul in care nu merge serverul.",
+      "Alert Error",
+      "The data was not created. Please try again later if the server is down.",
       [{ text: "OK" }]
     );
   };
@@ -96,7 +94,7 @@ const EditScreen = ({ route, navigation }) => {
             autoCapitalize="none"
             autoCorrect={false}
           />
-          <Text>Nume:</Text>
+          <Text>Name:</Text>
           <TextInput
             style={styles.input}
             defaultValue={petData.name}
@@ -108,7 +106,7 @@ const EditScreen = ({ route, navigation }) => {
           <PickerComponent value={petData.status} onValueChange={setStatus} />
           <View style={styles.btn}>
             <TouchableOpacity onPress={editPet}>
-              <Text style={styles.btnText}>Editare</Text>
+              <Text style={styles.btnText}>Edit</Text>
             </TouchableOpacity>
           </View>
         </View>

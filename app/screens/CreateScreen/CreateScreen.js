@@ -20,23 +20,23 @@ const CreateScreen = ({ navigation }) => {
   });
 
   const createAlertSuccess = () => {
-    Alert.alert("Alerta Succes", "Intrarea a fost adaugata cu succes", [
+    Alert.alert("Alert Success", "The entry has been successfully added", [
       { text: "OK", onPress: () => navigation.navigate("list") },
     ]);
   };
 
   const createAlertValidate = () => {
     Alert.alert(
-      "Alerta Validare",
-      "Datele de intrare sunt incorecte. Va rugam verificati.",
+      "Validation Alert",
+      "The input data is incorrect. Please check.",
       [{ text: "OK" }]
     );
   };
 
   const createAlertError = () => {
     Alert.alert(
-      "Alerta Eroare",
-      "Datele nu au fost create. Va rugam incercati mai tarziu in cazul in care nu merge serverul.",
+      "Alert Error",
+      "The data was not created. Please try again later if the server is down.",
       [{ text: "OK" }]
     );
   };
@@ -77,7 +77,7 @@ const CreateScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCorrect={false}
           />
-          <Text>Nume:</Text>
+          <Text>Name:</Text>
           <TextInput
             style={styles.input}
             placeholder="Please enter new name"
@@ -99,7 +99,7 @@ const CreateScreen = ({ navigation }) => {
           />
           <View style={styles.btn}>
             <TouchableOpacity onPress={addPet}>
-              <Text style={styles.btnText}>Adaugare</Text>
+              <Text style={styles.btnText}>Add</Text>
             </TouchableOpacity>
           </View>
         </View>
